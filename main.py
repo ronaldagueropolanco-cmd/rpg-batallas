@@ -42,20 +42,45 @@ class Objeto:
         self.cantidad = cantidad
 
 superman = Heroe("SuperMan", 300, 150, ["Volar", "Super Fuerza"], "super_fuerza")
-
 zod = Enemigo("Zod", 250, 125, ["Fuerza", "Resistencia"], "Pistola")
 
-while True:
-    superman.atacar(zod)
-    if zod.vida >= 0:
-        print(f"{superman.nombre} ataca a {zod.nombre}. {zod.nombre}  le queda con {zod.vida} de vida")
-    else:
-        print(f"{zod.nombre} fue derrotado. Ganador {superman.nombre}")
-        break
+objeto_superman = Objeto("Pocion de vida", 45, 3)
+objeto_zod = Objeto("Pocion de vida", 45, 3)
 
-    zod.atacar(superman)
-    if superman.vida >= 0:
-        print(f"{zod.nombre} ataca a {superman.nombre}. {superman.nombre}  le queda con {superman.vida} de vida \n")
+superman.agregar_objeto(objeto_superman)
+zod.agregar_objeto(objeto_zod)
+
+while True:
+    if superman.vida <= 50:
+        superman.usar_objeto("Pocion de vida")
+        print(f"{superman.nombre} se esta curando, vida actual {superman.vida}")
+        superman.atacar(zod)
+        if zod.vida >= 0:
+            print(f"{superman.nombre} ataca a {zod.nombre}. {zod.nombre}  le queda con {zod.vida} de vida")
+        else:
+            print(f"{zod.nombre} fue derrotado. Ganador {superman.nombre}")
+            break
     else:
-        print(f"{superman.nombre} fue derrotado. Ganador {zod.nombre}")
-        break
+        superman.atacar(zod)
+        if zod.vida >= 0:
+            print(f"{superman.nombre} ataca a {zod.nombre}. {zod.nombre}  le queda con {zod.vida} de vida")
+        else:
+            print(f"{zod.nombre} fue derrotado. Ganador {superman.nombre}")
+            break
+
+    if zod.vida <= 50:
+        zod.usar_objeto("Pocion de vida")
+        print(f"{zod.nombre} se esta curando, vida actual {zod.vida}")
+        zod.atacar(superman)
+        if superman.vida >= 0:
+            print(f"{zod.nombre} ataca a {superman.nombre}. {superman.nombre}  le queda con {superman.vida} de vida \n")
+        else:
+            print(f"{superman.nombre} fue derrotado. Ganador {zod.nombre}")
+            break
+    else:
+        zod.atacar(superman)
+        if superman.vida >= 0:
+            print(f"{zod.nombre} ataca a {superman.nombre}. {superman.nombre}  le queda con {superman.vida} de vida \n")
+        else:
+            print(f"{superman.nombre} fue derrotado. Ganador {zod.nombre}")
+            break

@@ -1,3 +1,5 @@
+import random
+
 class Personaje:
     def __init__(self, nombre, vida, dano, habilidades):
         self.nombre = nombre
@@ -6,7 +8,8 @@ class Personaje:
         self.habilidades = habilidades
 
     def atacar(self, objetivo):
-        objetivo.vida -= self.dano
+        dano_real = random.randint(self.dano - 20, self.dano + 20)
+        objetivo.vida -= dano_real
 
 class Heroe(Personaje):
     def __init__(self, nombre, vida, dano, habilidades, superpoder):

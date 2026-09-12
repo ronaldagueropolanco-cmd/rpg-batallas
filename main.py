@@ -6,10 +6,24 @@ class Personaje:
         self.vida = vida
         self.dano = dano
         self.habilidades = habilidades
+        self.inventario = {}
 
     def atacar(self, objetivo):
         dano_real = random.randint(self.dano - 20, self.dano + 20)
         objetivo.vida -= dano_real
+
+    def agregar_objeto(self, objeto):
+        self.inventario[objeto.nombre] = objeto
+
+    def usar_objeto(self, nombre_objeto):
+        if nombre_objeto not in self.inventario:
+            return "No tienes ese objeto"
+        else:
+            self.vida += self.inventario[nombre_objeto].curacion
+            self.inventario[nombre_objeto].cantidad -= 1
+
+            if self.inventario[nombre_objeto].cantidad == 0:
+                del self.inventario[nombre_objeto]
 
 class Heroe(Personaje):
     def __init__(self, nombre, vida, dano, habilidades, superpoder):
@@ -20,6 +34,12 @@ class Enemigo(Personaje):
     def __init__(self, nombre, vida, dano, habilidades, arma_poderosa):
         super().__init__(nombre, vida, dano, habilidades)
         self.arma_poderosa = arma_poderosa
+
+class Objeto:
+    def __init__(self, nombre, curacion, cantidad):
+        self.nombre = nombre
+        self.curacion = curacion
+        self.cantidad = cantidad
 
 superman = Heroe("SuperMan", 300, 150, ["Volar", "Super Fuerza"], "super_fuerza")
 

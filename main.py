@@ -51,7 +51,13 @@ superman.agregar_objeto(objeto_superman)
 zod.agregar_objeto(objeto_zod)
 
 while True:
-    if superman.vida <= 50:
+    accion = input(f"{superman.nombre}, ¿qué haces? (escribe 'atacar' o 'curar'): ").lower()
+    
+    while accion != 'atacar' and accion != 'curar':
+        print("Comando no reconocido")
+        accion = input(f"{superman.nombre}, ¿qué haces? (escribe 'atacar' o 'curar'): ").lower()
+
+    if accion == 'curar':
         superman.usar_objeto("Pocion de vida")
         print(f"{superman.nombre} se esta curando, vida actual {superman.vida}")
         superman.atacar(zod)
@@ -60,7 +66,7 @@ while True:
         else:
             print(f"{zod.nombre} fue derrotado. Ganador {superman.nombre}")
             break
-    else:
+    elif accion == 'atacar':
         superman.atacar(zod)
         if zod.vida >= 0:
             print(f"{superman.nombre} ataca a {zod.nombre}. {zod.nombre}  le queda con {zod.vida} de vida")
